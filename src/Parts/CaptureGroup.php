@@ -13,7 +13,7 @@ final class CaptureGroup implements RegexPartInterface
 
     public function __toString(): string
     {
-        return '(' . $this->part . ')';
+        return '(' . implode('', $this->part) . ')';
     }
 
     public function getRegexStringLength(): int

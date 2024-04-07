@@ -4,8 +4,9 @@ namespace Apie\RegexTools;
 use Apie\RegexTools\Parts\EndOfRegex;
 use Apie\RegexTools\Parts\RegexPartInterface;
 use Apie\RegexTools\Parts\StartOfRegex;
+use Stringable;
 
-final class CompiledRegularExpression
+final class CompiledRegularExpression implements Stringable
 {
     /**
      * @var array<int, RegexPartInterface>
@@ -55,5 +56,10 @@ final class CompiledRegularExpression
             $sum += $max;
         }
         return $sum;
+    }
+
+    public function __toString(): string
+    {
+        return implode('', $this->parts);
     }
 }

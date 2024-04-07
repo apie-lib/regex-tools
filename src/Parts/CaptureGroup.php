@@ -32,7 +32,8 @@ final class CaptureGroup implements RegexPartInterface
                 },
                 $this->part
             )
-        );;
+        );
+        ;
     }
 
     public function getMaximumPossibleLength(): ?int

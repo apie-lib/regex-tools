@@ -8,7 +8,7 @@ final class RegexPartIterator implements Iterator
 {
     private int $counter = 0;
 
-    private ?RegexPartInterface $currentPart = null; 
+    private ?RegexPartInterface $currentPart = null;
 
     private ?RegexStream $stream = null;
 
@@ -37,6 +37,6 @@ final class RegexPartIterator implements Iterator
     }
     public function valid(): bool
     {
-        return null !== $this->stream && null !== $this->currentPart; 
+        return null !== $this->stream && null !== $this->currentPart;
     }
 }

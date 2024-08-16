@@ -46,7 +46,7 @@ final class MatchOrMatch implements RegexPartInterface
         return min($part1, $part2);
     }
 
-    public function getMaximumPossibleLength(): int
+    public function getMaximumPossibleLength(): ?int
     {
         $sum1 = 0;
         foreach ($this->part1 as $part) {

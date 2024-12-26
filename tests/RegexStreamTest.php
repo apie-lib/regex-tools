@@ -17,10 +17,8 @@ use PHPUnit\Framework\TestCase;
 
 class RegexStreamTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider regularExpressionProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('regularExpressionProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function i_can_stream_a_regular_expression(array $expected, string $input)
     {
         $testItem = new RegexStream($input);
@@ -28,7 +26,7 @@ class RegexStreamTest extends TestCase
         $this->assertEquals($expected, $data);
     }
 
-    public function regularExpressionProvider(): Generator
+    public static function regularExpressionProvider(): Generator
     {
         yield 'empty regex' => [
             [],

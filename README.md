@@ -6,7 +6,7 @@
 
 
 
- [![Latest Stable Version](http://poser.pugx.org/apie/regex-tools/v)](https://packagist.org/packages/apie/regex-tools) [![Total Downloads](http://poser.pugx.org/apie/regex-tools/downloads)](https://packagist.org/packages/apie/regex-tools) [![Latest Unstable Version](http://poser.pugx.org/apie/regex-tools/v/unstable)](https://packagist.org/packages/apie/regex-tools) [![License](http://poser.pugx.org/apie/regex-tools/license)](https://packagist.org/packages/apie/regex-tools) [![PHP Version Require](http://poser.pugx.org/apie/regex-tools/require/php)](https://packagist.org/packages/apie/regex-tools) [![Code coverage](https://raw.githubusercontent.com/apie-lib/regex-tools/main/coverage_badge.svg)](https://apie-lib.github.io/coverage/regex-tools/index.html)  
+ [![Latest Stable Version](https://poser.pugx.org/apie/regex-tools/v)](https://packagist.org/packages/apie/regex-tools) [![Total Downloads](https://poser.pugx.org/apie/regex-tools/downloads)](https://packagist.org/packages/apie/regex-tools) [![Latest Unstable Version](https://poser.pugx.org/apie/regex-tools/v/unstable)](https://packagist.org/packages/apie/regex-tools) [![License](https://poser.pugx.org/apie/regex-tools/license)](https://packagist.org/packages/apie/regex-tools) [![PHP Composer](https://apie-lib.github.io/projectCoverage/coverage-regex-tools.svg)](https://apie-lib.github.io/projectCoverage/regex-tools/index.html)  
 
 [![PHP Composer](https://github.com/apie-lib/regex-tools/actions/workflows/php.yml/badge.svg?event=push)](https://github.com/apie-lib/regex-tools/actions/workflows/php.yml)
 

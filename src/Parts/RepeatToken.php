@@ -13,6 +13,9 @@ final class RepeatToken implements RegexPartInterface
 
     public function __toString(): string
     {
+        if ($this->minimum === $this->maximum && $this->minimum !== null) {
+            return $this->part . '{' . $this->minimum . '}';
+        }
         return $this->part . '{' . $this->minimum . ',' . $this->maximum . '}';
     }
 

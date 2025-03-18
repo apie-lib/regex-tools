@@ -13,7 +13,7 @@ final class CaptureGroup implements RegexPartInterface
 
     public function __toString(): string
     {
-        return '(' . $this->part . ')';
+        return '(' . implode('', $this->part) . ')';
     }
 
     public function getRegexStringLength(): int
@@ -32,7 +32,8 @@ final class CaptureGroup implements RegexPartInterface
                 },
                 $this->part
             )
-        );;
+        );
+        ;
     }
 
     public function getMaximumPossibleLength(): ?int

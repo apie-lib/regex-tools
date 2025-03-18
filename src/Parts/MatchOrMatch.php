@@ -8,13 +8,14 @@ final class MatchOrMatch implements RegexPartInterface
      * @param array<int, RegexPartInterface> $part2
      */
     public function __construct(
-        public readonly array $part1, public readonly array $part2
+        public readonly array $part1,
+        public readonly array $part2
     ) {
     }
 
     public function __toString(): string
     {
-        return implode('|',[...$this->part1, ...$this->part2]);
+        return implode('|', [...$this->part1, ...$this->part2]);
     }
 
     public function getRegexStringLength(): int
@@ -45,7 +46,7 @@ final class MatchOrMatch implements RegexPartInterface
         return min($part1, $part2);
     }
 
-    public function getMaximumPossibleLength(): int
+    public function getMaximumPossibleLength(): ?int
     {
         $sum1 = 0;
         foreach ($this->part1 as $part) {

@@ -137,7 +137,7 @@ final class RegexStream implements IteratorAggregate
                 if ($counter === 0) {
                     break;
                 }
-            } else if ($character === '(') {
+            } elseif ($character === '(') {
                 $counter++;
             }
         }
@@ -162,7 +162,7 @@ final class RegexStream implements IteratorAggregate
                 if ($counter === 0) {
                     break;
                 }
-            } else if ($character === '[') {
+            } elseif ($character === '[') {
                 $counter++;
             }
         }

@@ -48,4 +48,30 @@ final class CaptureGroup implements RegexPartInterface
         }
         return $sum;
     }
+
+    public function toCaseInsensitive(): RegexPartInterface
+    {
+        return new CaptureGroup(
+            array_map(
+                function (RegexPartInterface $part) {
+                    return $part->toCaseInsensitive();
+                },
+                $this->part
+            )
+        );
+    }
+
+    public function removeStartAndEndMarkers(): ?RegexPartInterface
+    {
+        return new CaptureGroup(
+            array_filter(
+                array_map(
+                    function (RegexPartInterface $part) {
+                        return $part->removeStartAndEndMarkers();
+                    },
+                    $this->part
+                )
+            )
+        );
+    }
 }

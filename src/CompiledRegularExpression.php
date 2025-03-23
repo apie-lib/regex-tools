@@ -62,4 +62,42 @@ final class CompiledRegularExpression implements Stringable
     {
         return implode('', $this->parts);
     }
+
+    public function toCaseInsensitive(): CompiledRegularExpression
+    {
+        return new self(
+            ...array_map(
+                function (RegexPartInterface $part) {
+                    return $part->toCaseInsensitive();
+                },
+                $this->parts
+            )
+        );
+    }
+
+    public function merge(CompiledRegularExpression... $expressions): CompiledRegularExpression
+    {
+        $parts = $this->parts;
+        foreach ($expressions as $expression) {
+            foreach ($expression->parts as $part) {
+                $parts[] = $part;
+            }
+        }
+
+        return new self(...$parts);
+    }
+
+    public function removeStartAndEndMarkers(): CompiledRegularExpression
+    {
+        return new self(
+            ...array_filter(
+                array_map(
+                    function (RegexPartInterface $part) {
+                        return $part->removeStartAndEndMarkers();
+                    },
+                    $this->parts
+                ),
+            )
+        );
+    }
 }

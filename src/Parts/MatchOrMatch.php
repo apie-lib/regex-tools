@@ -66,4 +66,44 @@ final class MatchOrMatch implements RegexPartInterface
         }
         return max($sum1, $sum2);
     }
+
+    public function toCaseInsensitive(): RegexPartInterface
+    {
+        return new MatchOrMatch(
+            array_map(
+                function (RegexPartInterface $part) {
+                    return $part->toCaseInsensitive();
+                },
+                $this->part1
+            ),
+            array_map(
+                function (RegexPartInterface $part) {
+                    return $part->toCaseInsensitive();
+                },
+                $this->part2
+            )
+        );
+    }
+
+    public function removeStartAndEndMarkers(): ?RegexPartInterface
+    {
+        return new MatchOrMatch(
+            array_filter(
+                array_map(
+                    function (RegexPartInterface $part) {
+                        return $part->removeStartAndEndMarkers();
+                    },
+                    $this->part1
+                )
+            ),
+            array_filter(
+                array_map(
+                    function (RegexPartInterface $part) {
+                        return $part->removeStartAndEndMarkers();
+                    },
+                    $this->part2
+                )
+            )
+        );
+    }
 }

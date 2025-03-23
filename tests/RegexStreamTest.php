@@ -87,24 +87,13 @@ class RegexStreamTest extends TestCase
         ];
         yield '[] regex' => [
             [
-                new AnyMatch([
-                    new StaticCharacter('a'),
-                    new StaticCharacter('b'),
-                    new AnyMatch([
-                        new StaticCharacter('d'),
-                        new StaticCharacter('e')
-                    ])
-                ])
+                new AnyMatch('ab[de\]')
             ],
-            '[ab[de]]',
+            '[ab[de\\]]',
         ];
         yield 'not [] regex' => [
             [
-                new AnyMatch([
-                    new StartOfRegex(),
-                    new StaticCharacter('a'),
-                    new StaticCharacter('b'),
-                ])
+                new AnyMatch('^ab')
             ],
             '[^ab]',
         ];

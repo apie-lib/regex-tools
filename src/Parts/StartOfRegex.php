@@ -22,4 +22,14 @@ final class StartOfRegex implements RegexPartInterface
     {
         return 0;
     }
+
+    public function toCaseInsensitive(): RegexPartInterface
+    {
+        return $this;
+    }
+
+    public function removeStartAndEndMarkers(): ?RegexPartInterface
+    {
+        return null;
+    }
 }

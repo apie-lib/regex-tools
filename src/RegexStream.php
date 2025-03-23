@@ -150,25 +150,20 @@ final class RegexStream implements IteratorAggregate
     private function createAnyMatch(): RegexPartInterface
     {
         $ptr = 1;
-        $counter = 1;
         while ($ptr < strlen($this->regexToStream)) {
             $character = substr($this->regexToStream, $ptr, 1);
             if ($character === '\\') {
-                $ptr++;
+                $ptr+=2;
+                continue;
             }
             $ptr++;
             if ($character === ']') {
-                $counter--;
-                if ($counter === 0) {
-                    break;
-                }
-            } elseif ($character === '[') {
-                $counter++;
+                break;
             }
         }
         $insideAnyMatch = substr($this->regexToStream, 1, $ptr - 2);
         return new AnyMatch(
-            iterator_to_array(new self($insideAnyMatch))
+            $insideAnyMatch
         );
     }
 

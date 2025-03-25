@@ -16,9 +16,9 @@ class CompiledRegularExpressionTest extends TestCase
         string $regex
     ) {
         $testItem = CompiledRegularExpression::createFromRegexWithoutDelimiters($regex);
+        $this->assertEquals($expectedToString, $testItem->__toString());
         $this->assertEquals($expectedMinimal, $testItem->getMinimalPossibleLength());
         $this->assertEquals($expectedMaximum, $testItem->getMaximumPossibleLength());
-        $this->assertEquals($expectedToString, $testItem->__toString());
     }
 
     public static function provideRegularExpressions(): Generator
@@ -38,11 +38,12 @@ class CompiledRegularExpressionTest extends TestCase
         yield '[] regex' => [1, 1, '[ab[de\]]', '[ab[de\]]'];
         yield 'not [] regex' => [1, 1, '[^ab]', '[^ab]'];
         yield 'a or b or c' => [1, 1, 'a|b|c', 'a|b|c'];
+        yield 'floating point' => [1, null, '^-?(0|[1-9]\d*)(\.\d+)?$', '^-?(0|[1-9]\d*)(\.\d+)?$'];
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('provideConversionRegex')]
     #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_modify_a_regex_regex(
+    public function it_can_modify_a_regex(
         string $expectedCaseInsensitive,
         string $expectedRemoveMarkers,
         string $regex
@@ -72,6 +73,7 @@ class CompiledRegularExpressionTest extends TestCase
         yield '[] range' => ['^[A-Za-z]$', '[a-z]', '^[a-z]$'];
         yield '[] range lower and upper case' => ['[A-Za-z]', '[a-zA-Z]', '[a-zA-Z]'];
         yield 'invalid range' => ['[\-AZaz]', '[a-Z]', '[a-Z]'];
+        yield 'floating point' => ['^-?(0|[1-9]\d*)(\.\d+)?$', '-?(0|[1-9]\d*)(\.\d+)?', '^-?(0|[1-9]\d*)(\.\d+)?$'];
         yield 'huge range' => ['[0-\[\]-ÿŸΜ]', '[0-ÿ]', '[0-ÿ]']; //Μ is upper of μ, Ÿ is upper of ÿ
     }
 }

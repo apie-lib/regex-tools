@@ -15,14 +15,31 @@ final class MatchOrMatch implements RegexPartInterface
 
     public function __toString(): string
     {
-        return implode('|', [...$this->part1, ...$this->part2]);
+        $callback = function (RegexPartInterface $part) {
+            return $part->__toString();
+        };
+
+        return implode(
+            '',
+                array_map(
+                $callback,
+                $this->part1
+            )
+        ) . '|'
+        . implode(
+            '',
+            array_map(
+                $callback,
+                $this->part2
+            )
+        );
     }
 
     public function getRegexStringLength(): int
     {
         return array_reduce([...$this->part1, ...$this->part2], function (int $prevValue, RegexPartInterface $part) {
             return $prevValue + $part->getRegexStringLength();
-        }, 2);
+        }, 1);
     }
 
     public function getMinimalPossibleLength(): int

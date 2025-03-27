@@ -28,15 +28,13 @@ final class AnyMatch implements RegexPartInterface
         return 1;
     }
 
-    public function toCaseInsensitive(): RegexPartInterface
+    private function makeAllIncludedArray(?callable $callback): array
     {
         $split = mb_str_split($this->part);
         $included = [];
         $nextEscaped = false;
         $skip = 0;
-        $prefix = '';
         if ($split[0] === '^') {
-            $prefix = '^';
             $skip = 1;
         }
         foreach ($split as $key => $character) {
@@ -68,15 +66,15 @@ final class AnyMatch implements RegexPartInterface
 
                 for ($code = $minCode; $code <= $maxCode; $code++) {
                     $chr = mb_chr($code);
-                    $included[] = mb_chr($code);
-                    $included[] = mb_strtoupper($chr);
-                    $included[] = mb_strtolower($chr);
+                    foreach ($callback($chr) as $added) {
+                        $included[] = $added;
+                    }
                 }
                 $skip = 2;
             } else {
-                $included[] = $character;
-                $included[] = mb_strtoupper($character);
-                $included[] = mb_strtolower($character);
+                foreach ($callback($character) as $added) {
+                    $included[] = $added;
+                }
             }
         }
         $included = array_filter(
@@ -95,7 +93,35 @@ final class AnyMatch implements RegexPartInterface
             }
         );
         sort($included);
-        
+        return $included;
+    }
+
+    public function toCaseInsensitive(): RegexPartInterface
+    {
+        $prefix = '';
+        if ($this->part[0] === '^') {
+            $prefix = '^';
+        }
+        $included = $this->makeAllIncludedArray(function (string $chr): array {
+            return [$chr, mb_strtoupper($chr), mb_strtolower($chr)];
+        });
+        return new AnyMatch(
+            $prefix . self::createRange($included)
+        );
+    }
+
+    public function toDotAll(): RegexPartInterface
+    {
+        $prefix = '';
+        if ($this->part[0] === '^') {
+            $prefix = '^';
+        }
+        $included = $this->makeAllIncludedArray(function (string $chr): array {
+            if ($chr === '.') {
+                return ['.', "\n", "\r"];
+            }
+            return [$chr];
+        });
         return new AnyMatch(
             $prefix . self::createRange($included)
         );

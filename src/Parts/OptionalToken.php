@@ -35,6 +35,13 @@ final class OptionalToken implements RegexPartInterface
         );
     }
 
+    public function toDotAll(): RegexPartInterface
+    {
+        return new OptionalToken(
+            $this->part->toDotAll()
+        );
+    }
+
     public function removeStartAndEndMarkers(): ?RegexPartInterface
     {
         $part = $this->part->removeStartAndEndMarkers();

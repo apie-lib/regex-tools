@@ -34,6 +34,11 @@ final class RepetitionToken implements RegexPartInterface
         return new RepetitionToken($this->part->toCaseInsensitive(), $this->minimalOnce);
     }
 
+    public function toDotAll(): RegexPartInterface
+    {
+        return new RepetitionToken($this->part->toDotAll(), $this->minimalOnce);
+    }
+
     public function removeStartAndEndMarkers(): ?RegexPartInterface
     {
         $part = $this->part->removeStartAndEndMarkers();

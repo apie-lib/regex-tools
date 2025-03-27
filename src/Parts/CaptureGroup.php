@@ -61,6 +61,18 @@ final class CaptureGroup implements RegexPartInterface
         );
     }
 
+    public function toDotAll(): RegexPartInterface
+    {
+        return new CaptureGroup(
+            array_map(
+                function (RegexPartInterface $part) {
+                    return $part->toDotAll();
+                },
+                $this->part
+            )
+        );
+    }
+
     public function removeStartAndEndMarkers(): ?RegexPartInterface
     {
         return new CaptureGroup(

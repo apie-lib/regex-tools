@@ -28,6 +28,11 @@ final class StartOfRegex implements RegexPartInterface
         return $this;
     }
 
+    public function toDotAll(): RegexPartInterface
+    {
+        return $this;
+    }
+
     public function removeStartAndEndMarkers(): ?RegexPartInterface
     {
         return null;

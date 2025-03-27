@@ -102,6 +102,24 @@ final class MatchOrMatch implements RegexPartInterface
         );
     }
 
+    public function toDotAll(): RegexPartInterface
+    {
+        return new MatchOrMatch(
+            array_map(
+                function (RegexPartInterface $part) {
+                    return $part->toDotAll();
+                },
+                $this->part1
+            ),
+            array_map(
+                function (RegexPartInterface $part) {
+                    return $part->toDotAll();
+                },
+                $this->part2
+            )
+        );
+    }
+
     public function removeStartAndEndMarkers(): ?RegexPartInterface
     {
         return new MatchOrMatch(

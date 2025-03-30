@@ -45,7 +45,7 @@ final class StaticCharacter implements RegexPartInterface
     public function toDotAll(): RegexPartInterface
     {
         if ($this->character === '.') {
-            return new MatchOrMatch([new StaticCharacter('.')], [new EscapedCharacter('n')]);
+            return new CaptureGroup([new MatchOrMatch([new StaticCharacter('.')], [new EscapedCharacter('n')])]);
         }
 
         return $this;

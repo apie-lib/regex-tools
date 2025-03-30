@@ -75,6 +75,19 @@ final class CompiledRegularExpression implements Stringable
         );
     }
 
+    public function toDotAll(): CompiledRegularExpression
+    {
+        return new self(
+            ...array_map(
+                function (RegexPartInterface $part) {
+                    return $part->toDotAll();
+                },
+                $this->parts
+            )
+        );
+    }
+
+
     public function merge(CompiledRegularExpression... $expressions): CompiledRegularExpression
     {
         $parts = $this->parts;

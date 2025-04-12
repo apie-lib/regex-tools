@@ -21,7 +21,7 @@ final class MatchOrMatch implements RegexPartInterface
 
         return implode(
             '',
-                array_map(
+            array_map(
                 $callback,
                 $this->part1
             )

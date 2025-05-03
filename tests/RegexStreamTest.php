@@ -87,24 +87,13 @@ class RegexStreamTest extends TestCase
         ];
         yield '[] regex' => [
             [
-                new AnyMatch([
-                    new StaticCharacter('a'),
-                    new StaticCharacter('b'),
-                    new AnyMatch([
-                        new StaticCharacter('d'),
-                        new StaticCharacter('e')
-                    ])
-                ])
+                new AnyMatch('ab[de\]')
             ],
-            '[ab[de]]',
+            '[ab[de\\]]',
         ];
         yield 'not [] regex' => [
             [
-                new AnyMatch([
-                    new StartOfRegex(),
-                    new StaticCharacter('a'),
-                    new StaticCharacter('b'),
-                ])
+                new AnyMatch('^ab')
             ],
             '[^ab]',
         ];
@@ -127,6 +116,33 @@ class RegexStreamTest extends TestCase
                 )
             ],
             'a|b|c',
+        ];
+        yield 'floating point' => [
+            [
+                new OptionalToken(new StaticCharacter('-')),
+                new CaptureGroup([
+                    new MatchOrMatch(
+                        [new StaticCharacter('0')],
+                        [
+                            new AnyMatch('1-9'),
+                            new RepetitionToken(
+                                new EscapedCharacter('d'),
+                                false
+                            )
+                        ]
+                    )
+                ]),
+                new OptionalToken(
+                    new CaptureGroup([
+                        new EscapedCharacter('.'),
+                        new RepetitionToken(
+                            new EscapedCharacter('d'),
+                            true
+                        )
+                    ])
+                )
+            ],
+            '-?(0|[1-9]\d*)(\.\d+)?'
         ];
     }
 }

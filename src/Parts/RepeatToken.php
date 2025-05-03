@@ -43,4 +43,20 @@ final class RepeatToken implements RegexPartInterface
         }
         return $this->maximum === null ? null : ($max * $this->maximum);
     }
+
+    public function toCaseInsensitive(): RegexPartInterface
+    {
+        return new RepeatToken($this->part->toCaseInsensitive(), $this->minimum, $this->maximum);
+    }
+
+    public function toDotAll(): RegexPartInterface
+    {
+        return new RepeatToken($this->part->toDotAll(), $this->minimum, $this->maximum);
+    }
+
+    public function removeStartAndEndMarkers(): ?RegexPartInterface
+    {
+        $part = $this->part->removeStartAndEndMarkers();
+        return $part ? new RepeatToken($part, $this->minimum, $this->maximum) : null;
+    }
 }

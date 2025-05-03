@@ -27,4 +27,24 @@ final class OptionalToken implements RegexPartInterface
     {
         return $this->part->getMaximumPossibleLength();
     }
+
+    public function toCaseInsensitive(): RegexPartInterface
+    {
+        return new OptionalToken(
+            $this->part->toCaseInsensitive()
+        );
+    }
+
+    public function toDotAll(): RegexPartInterface
+    {
+        return new OptionalToken(
+            $this->part->toDotAll()
+        );
+    }
+
+    public function removeStartAndEndMarkers(): ?RegexPartInterface
+    {
+        $part = $this->part->removeStartAndEndMarkers();
+        return $part ? new OptionalToken($part) : null;
+    }
 }

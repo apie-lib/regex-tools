@@ -21,4 +21,19 @@ interface RegexPartInterface extends Stringable
      * Returning null means there a string can be of infinite length and still match the regular expression.
      */
     public function getMaximumPossibleLength(): ?int;
+
+    /**
+     * Changes part to make the regular expression case insensitive (similar to i regex modifier).
+     */
+    public function toCaseInsensitive(): RegexPartInterface;
+
+    /**
+     * Changes part to make . match \n as well (similar to s regex modifier).
+     */
+    public function toDotAll(): RegexPartInterface;
+
+    /**
+     * Changes part to remove start and end markers.
+     */
+    public function removeStartAndEndMarkers(): ?RegexPartInterface;
 }

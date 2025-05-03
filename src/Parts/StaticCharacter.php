@@ -26,4 +26,33 @@ final class StaticCharacter implements RegexPartInterface
     {
         return strlen($this->character);
     }
+
+    public function toCaseInsensitive(): RegexPartInterface
+    {
+        $u = mb_strtoupper($this->character);
+        if ($u !== $this->character) {
+            return new CaptureGroup([
+                new MatchOrMatch(
+                    [$this],
+                    [new StaticCharacter($u)]
+                )
+            ]);
+        }
+
+        return $this;
+    }
+
+    public function toDotAll(): RegexPartInterface
+    {
+        if ($this->character === '.') {
+            return new CaptureGroup([new MatchOrMatch([new StaticCharacter('.')], [new EscapedCharacter('n')])]);
+        }
+
+        return $this;
+    }
+
+    public function removeStartAndEndMarkers(): ?RegexPartInterface
+    {
+        return $this;
+    }
 }

@@ -27,4 +27,29 @@ final class EscapedCharacter implements RegexPartInterface
     {
         return strlen($this->character);
     }
+
+    public function toCaseInsensitive(): RegexPartInterface
+    {
+        $u = mb_strtoupper($this->character);
+        if ($u !== $this->character && !in_array($this->character, ['d', 'D', 'w','W', 's', 'S', 'b', 'B', 'A', 'Z'])) {
+            return new CaptureGroup([
+                new MatchOrMatch(
+                    [$this],
+                    [new EscapedCharacter($u)]
+                )
+            ]);
+        }
+
+        return $this;
+    }
+
+    public function toDotAll(): RegexPartInterface
+    {
+        return $this;
+    }
+
+    public function removeStartAndEndMarkers(): ?RegexPartInterface
+    {
+        return $this;
+    }
 }

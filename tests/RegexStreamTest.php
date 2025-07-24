@@ -117,6 +117,23 @@ class RegexStreamTest extends TestCase
             ],
             'a|b|c',
         ];
+        yield 'abc or def' => [
+            [
+                new MatchOrMatch(
+                    [new StaticCharacter('a'), new StaticCharacter('b'), new StaticCharacter('c')],
+                    [new StaticCharacter('d'), new StaticCharacter('e'), new StaticCharacter('f')],
+                )
+            ],
+            'abc|def',
+        ];
+        yield 'escaped |' => [
+            [
+                new StaticCharacter('a'), new StaticCharacter('b'), new StaticCharacter('c'),
+                new EscapedCharacter('|'),
+                new StaticCharacter('d'), new StaticCharacter('e'), new StaticCharacter('f'),
+            ],
+            'abc\|def',
+        ];
         yield 'floating point' => [
             [
                 new OptionalToken(new StaticCharacter('-')),

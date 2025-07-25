@@ -38,14 +38,14 @@ final class RegexStream implements IteratorAggregate
     public function nextToken(): ?RegexPartInterface
     {
         $split = $this->splitTopLevelAlternation($this->regexToStream);
-    if ($split) {
-        [$left, $right] = $split;
-        $this->regexToStream = ''; // Consumed
-        return new MatchOrMatch(
-            iterator_to_array(new self($left)),
-            iterator_to_array(new self($right))
-        );
-    }
+        if ($split) {
+            [$left, $right] = $split;
+            $this->regexToStream = ''; // Consumed
+            return new MatchOrMatch(
+                iterator_to_array(new self($left)),
+                iterator_to_array(new self($right))
+            );
+        }
         $firstCharacter = substr($this->regexToStream, 0, 1);
         if ($firstCharacter === '') {
             return null;
@@ -65,31 +65,31 @@ final class RegexStream implements IteratorAggregate
      * Without it, it would parse it as a, then b, then c or d then e and f.
      */
     private function splitTopLevelAlternation(string $regex): ?array
-{
-    $neededCharacters = [];
-    $length = strlen($regex);
-    for ($i = 0; $i < $length; $i++) {
-        $char = $regex[$i];
-        if ($char === '\\') {
-            $i++; // skip escaped character
-            continue;
+    {
+        $neededCharacters = [];
+        $length = strlen($regex);
+        for ($i = 0; $i < $length; $i++) {
+            $char = $regex[$i];
+            if ($char === '\\') {
+                $i++; // skip escaped character
+                continue;
+            }
+            if ($char === '(') {
+                $neededCharacters[] = ')';
+            } elseif ($char === '[') {
+                $neededCharacters[] = ']';
+            } elseif (!empty($neededCharacters) && $char === $neededCharacters[count($neededCharacters) - 1]) {
+                array_pop($neededCharacters);
+            } elseif ($char === '|' && empty($neededCharacters)) {
+                // Found top-level alternation
+                return [
+                    substr($regex, 0, $i),
+                    substr($regex, $i + 1)
+                ];
+            }
         }
-        if ($char === '(') {
-            $neededCharacters[] = ')';
-        } elseif ($char === '[') {
-            $neededCharacters[] = ']';
-        } elseif (!empty($neededCharacters) && $char === $neededCharacters[count($neededCharacters) - 1]) {
-            array_pop($neededCharacters);
-        } elseif ($char === '|' && empty($neededCharacters)) {
-            // Found top-level alternation
-            return [
-                substr($regex, 0, $i),
-                substr($regex, $i + 1)
-            ];
-        }
+        return null;
     }
-    return null;
-}
 
     public function getIterator(): Traversable
     {

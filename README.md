@@ -14,4 +14,26 @@ This package is part of the [Apie](https://github.com/apie-lib) library.
 The code is maintained in a monorepo, so PR's need to be sent to the [monorepo](https://github.com/apie-lib/apie-lib-monorepo/pulls)
 
 ## Documentation
-This package is used internally in Apie or no documentation is available right now
+Parses PHP regular expressions into an ordered sequence of inspectable tokens (literals,
+groups, repetitions, anchors, escapes) and computes metadata such as the minimal and
+maximum possible match length. No Apie or framework dependency.
+
+### Standalone usage
+```bash
+composer require apie/regex-tools
+```
+
+Use `Apie\RegexTools\CompiledRegularExpression::createFromRegexWithoutDelimiters()` to
+parse a pattern body and inspect it:
+```php
+use Apie\RegexTools\CompiledRegularExpression;
+
+$compiled = CompiledRegularExpression::createFromRegexWithoutDelimiters('^[A-Z]{2,4}\d+$');
+$min = $compiled->getMinimalPossibleLength();
+$max = $compiled->getMaximumPossibleLength(); // null when unbounded
+```
+
+Iterate the individual tokens with `Apie\RegexTools\RegexPartIterator`, which yields
+`Apie\RegexTools\Parts\RegexPartInterface` implementations such as `StaticCharacter`,
+`CaptureGroup`, `RepeatToken`, and `OptionalToken`. `apie/regex-value-objects` builds on
+this package to validate and describe regex-based value objects.
